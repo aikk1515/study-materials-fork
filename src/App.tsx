@@ -4,6 +4,7 @@ import { isMobile, selfTest } from "./api";
 import { addPluginListener, invoke } from "@tauri-apps/api/core";
 import { runBack } from "./back";
 import Home from "./pages/Home";
+import NbaPage from "./pages/Nba";
 import Search, { RankPage } from "./pages/Search";
 import Category, { ChannelPage } from "./pages/Category";
 import Profile from "./pages/Profile";
@@ -24,6 +25,7 @@ function TabBar() {
     { k: "home", label: "首页" },
     { k: "search", label: "搜索" },
     { k: "category", label: "分类" },
+    { k: "nba", label: "NBA" },
     { k: "profile", label: "我的" },
   ];
   /* 细瘦纯文字分栏：只有选中项高亮，没有指示点。
@@ -108,8 +110,8 @@ function AppBody() {
       if (loginOpen) { if (e.key === "Escape") setLoginOpen(false); return; }
       if (e.key === "Escape") { if (stack.length) pop(); return; }
       if (e.key === "/") { e.preventDefault(); setTab("search"); return; }
-      if (["1", "2", "3", "4"].includes(e.key) && !e.repeat) {
-        setTab((["home", "search", "category", "profile"] as Tab[])[Number(e.key) - 1]);
+      if (["1", "2", "3", "4", "5"].includes(e.key) && !e.repeat) {
+        setTab((["home", "search", "category", "nba", "profile"] as Tab[])[Number(e.key) - 1]);
       }
     };
     window.addEventListener("keydown", fn);
@@ -131,6 +133,7 @@ function AppBody() {
         <div className={vis("home")}><Home active={pageActive && tab === "home"} bottomInset={bottomInset} /></div>
         <div className={vis("search")}><Search active={pageActive && tab === "search"} wide={wide} /></div>
         <div className={vis("category")}><Category wide={wide} active={pageActive && tab === "category"} /></div>
+        <div className={vis("nba")}><NbaPage /></div>
         <div className={vis("profile")}><Profile wide={wide} /></div>
 
         {stack.map((p, i) => (
@@ -185,8 +188,8 @@ function ShellInner({ collapsed, theater }: { collapsed: boolean; theater: boole
       if (loginOpen) { if (e.key === "Escape") setLoginOpen(false); return; }
       if (e.key === "Escape") { if (stack.length) pop(); return; }
       if (e.key === "/") { e.preventDefault(); setTab("search"); return; }
-      if (["1", "2", "3", "4"].includes(e.key) && !e.repeat) {
-        setTab((["home", "search", "category", "profile"] as Tab[])[Number(e.key) - 1]);
+      if (["1", "2", "3", "4", "5"].includes(e.key) && !e.repeat) {
+        setTab((["home", "search", "category", "nba", "profile"] as Tab[])[Number(e.key) - 1]);
       }
     };
     window.addEventListener("keydown", fn);
@@ -203,6 +206,7 @@ function ShellInner({ collapsed, theater }: { collapsed: boolean; theater: boole
         <div className={vis("home")}><Home active={pageActive && tab === "home"} bottomInset={14} /></div>
         <div className={vis("search")}><Search active={pageActive && tab === "search"} wide={wide} /></div>
         <div className={vis("category")}><Category wide={wide} active={pageActive && tab === "category"} /></div>
+        <div className={vis("nba")}><NbaPage /></div>
         <div className={vis("profile")}><Profile wide={wide} /></div>
         {stack.map((p, i) => (
           <div key={p.key} className="absolute inset-0 z-30 bg-bg win-page-in" style={{ boxShadow: "-18px 0 40px rgba(0,0,0,.5)" }}>
